@@ -1,0 +1,10 @@
+>HSBGPG Human gene for bone gla protein (BGP)
+A: 217
+C: 409
+G: 373
+T: 232
+>HSGLTH1 Human theta 1-globin gene
+A: 146
+C: 362
+G: 357
+T: 155

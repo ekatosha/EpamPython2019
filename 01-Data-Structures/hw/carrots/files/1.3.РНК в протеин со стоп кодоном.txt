@@ -1,0 +1,4 @@
+>HSBGPG Human gene for bone gla protein (BGP)
+GRFPLDPPAPWSGMPLLIAGHSPEGINSAGGWRGRPAES
+>HSGLUH1 Human theta 1-globin gene
+PLHSPHPANFCVFSRD
