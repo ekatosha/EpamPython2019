@@ -1,6 +1,6 @@
 # Очень красивый markdown
 
-Результат Части 1-2 winedata_full.json можно скачать по [здесь.](https://drive.google.com/file/d/1x1RlzGGGGGs62__7ed-YLyNd8UPP2Dzi/view?usp=sharing)
+Результат Части 1-2 winedata_full.json можно скачать [здесь.](https://drive.google.com/file/d/1x1RlzGGGGGs62__7ed-YLyNd8UPP2Dzi/view?usp=sharing)
 Т.к. слишком большой, гитхаб не разрешил загрузить в репозиторий
 
 ## Результаты статистики
