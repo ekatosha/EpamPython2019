@@ -1,37 +1,18 @@
 """
-Реализовать метод __str__, позволяющий выводить все папки и файлы из данной, например так:
-
-> print(folder1)
-
-V folder1
-|-> V folder2
-|   |-> V folder3
-|   |   |-> file3
-|   |-> file2
-|-> file1
-
-А так же возможность проверить, находится ли файл или папка в другой папке:
-> print(file3 in folder2)
-True
-
+E - dict(<V> : [<V>, <V>, ...])
+Ключ - строка, идентифицирующая вершину графа
+значение - список вершин, достижимых из данной
+Сделать так, чтобы по графу можно было итерироваться(обходом в ширину)
 """
 
 
-class PrintableFolder:
-    def __init__(self, name, content):
-        self.name = name
-        self.content = content
-
-    def __str__(self):
-        pass
+class Graph:
+    def __init__(self, E):
+        self.E = E
 
 
-class PrintableFile:
-    def __init__(self, name):
-        self.name = name
+E = {'A': ['B', 'C', 'D'], 'B': ['C'], 'C': [], 'D': ['A']}
+graph = Graph(E)
 
-    def __str__(self):
-        pass
-
-
-
+for vertex in graph:
+    print(vertex)
