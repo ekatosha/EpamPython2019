@@ -24,34 +24,27 @@ def collatz_steps(n):
  assert collatz_steps(1000000) == 152 '''
 
 
-def even(num):
-    return int(num/2)
-
-
-def odd(num):
-    return int(num*3+1)
-
-
 def even_odd(num_d):
     if num_d['number']%2 == 0:
-        return {'number': even(num_d['number']),
+        return {'number': num_d['number']//2,
             'count': num_d['count'] + 1}
-    return {'number': odd(num_d['number']),
+    return {'number': num_d['number']*3+1,
             'count': num_d['count'] + 1}
-
 
 def make_d(num):
     return {'number': num, 'count': 0}
-
 
 def step(state):
     if state['number'] == 1:
         return state['count']
     return step(even_odd(state))
 
-
 def collatz_steps(n):
-      return step(make_d(n))
+    if not isinstance(n, int):
+        raise TypeError('an integer is required')
+    if n <= 0:
+        raise ValueError('n > 0 is required')
+    return step(make_d(n))
 
 
 assert collatz_steps(16) == 4
