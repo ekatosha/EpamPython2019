@@ -5,9 +5,9 @@ def save_func_info(wraped):
     def wrapper1(wrapper_func):
         def wrapper2(*args, **kwargs):
             return wraped(*args, **kwargs)
-        setattr(wrapper2, '__name__', wraped.__name__)
-        setattr(wrapper2, '__doc__', wraped.__doc__)
-        setattr(wrapper2, '__original_func', wraped)
+        wrapper2.__name__ = wraped.__name__
+        wrapper2.__doc__ = wraped.__doc__
+        wrapper2.__original_func = wraped
         return wrapper2
     return wrapper1
 
