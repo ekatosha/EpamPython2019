@@ -8,7 +8,7 @@ print("It's fine")
 
 class Suppressor:
 
-    def __init__(self, exception):
+    def __init__(self, *exception):
         self.exception = exception
 
     def __enter__(self):
