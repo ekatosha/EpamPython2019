@@ -12,7 +12,7 @@ class Suppressor:
         self.exception = exception
 
     def __enter__(self):
-        return self.exception
+        pass
 
     def __exit__(self, type_, value_, traceback_):
         return isinstance(value_, self.exception)
