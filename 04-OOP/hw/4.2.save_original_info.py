@@ -22,7 +22,6 @@ def new_decorator(f1):
         name = getattr(wraped, '__name__')
         doc = getattr(wraped, '__doc__')
         original_func = wraped
-
         def wrapper3(*args, **kwargs):
             return wraped(*args, **kwargs)
         setattr(wrapper3, '__name__', name)
