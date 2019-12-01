@@ -29,10 +29,7 @@ class Quaternion:
             raise Exception
 
     def __eq__(self, other):
-        if self.a == other.a and self.i == other.i and self.j == other.j and self.k == other.k:
-            return True
-        else:
-            return False
+        return self.a == other.a and self.i == other.i and self.j == other.j and self.k == other.k 
 
     def __abs__(self):
         square = self.a * self.a + self.i * self.i + self.j * self.j + self.k * self.k
