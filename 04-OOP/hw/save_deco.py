@@ -1,8 +1,19 @@
 import functools
 
 
+def save_func_info(wraped):
+    def wrapper1(wrapper_func):
+        def wrapper2(*args, **kwargs):
+            return wraped(*args, **kwargs)
+        wrapper2.__name__ = wraped.__name__
+        wrapper2.__doc__ = wraped.__doc__
+        wrapper2.__original_func = wraped
+        return wrapper2
+    return wrapper1
+
+
 def print_result(func):
-    @new_decorator(func)
+    @save_func_info(func)
     def wrapper(*args, **kwargs):
         """Function-wrapper which print result of an original function"""
         result = func(*args, **kwargs)
@@ -17,15 +28,14 @@ def custom_sum(*args):
     return functools.reduce(lambda x, y: x + y, args)
 
 
-def new_decorator(f1):
-    def wrapper2(wrapper_func, wraped=f1):
-        name = getattr(wraped, '__name__')
-        doc = getattr(wraped, '__doc__')
-        original_func = wraped
-        def wrapper3(*args, **kwargs):
-            return wraped(*args, **kwargs)
-        setattr(wrapper3, '__name__', name)
-        setattr(wrapper3, '__doc__', doc)
-        setattr(wrapper3, '__original_func', original_func)
-        return wrapper3
-    return wrapper2
+if __name__ == '__main__':
+    custom_sum([1, 2, 3], [4, 5])
+    custom_sum(1, 2, 3, 4)
+
+    print(custom_sum.__doc__)
+    print(custom_sum.__name__)
+    print(custom_sum.__original_func)
+    without_print = custom_sum.__original_func
+
+    # the result returns without printing
+    without_print(1, 2, 3, 4)
