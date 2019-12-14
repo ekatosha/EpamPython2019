@@ -1,17 +1,27 @@
-"""
-Написать декоратор instances_counter, который применяется к любому классу
-и добавляет ему 2 метода:
-get_created_instances - возвращает количество созданых экземпляров класса
-reset_instances_counter - сбросить счетчик экземпляров,
-возвращает значение до сброса
-Имя декоратора и методов не менять
-
-Ниже пример использования
-"""
-
-
 def instances_counter(cls):
-    """Some code"""
+    count_instance = 0
+
+    def __new__(cls, *args, **kwargs):
+        nonlocal count_instance
+        count_instance += 1
+        instance = super(cls.__class__, cls).__new__(cls)
+        return instance
+
+    def get_created_instances(*args, **kwargs):
+        nonlocal count_instance
+        print(count_instance)
+        return count_instance
+
+    def reset_instances_counter(*args, **kwargs):
+        nonlocal count_instance
+        print(count_instance)
+        count_instance = 0
+        return count_instance
+
+    cls.__new__ = __new__
+    cls.get_created_instances = get_created_instances
+    cls.reset_instances_counter = reset_instances_counter
+
     return cls
 
 
