@@ -1,23 +1,20 @@
 def instances_counter(cls):
-    count_instance = 0
 
     def __new__(cls, *args, **kwargs):
-        nonlocal count_instance
-        count_instance += 1
-        instance = super(cls.__class__, cls).__new__(cls)
-        return instance
-
+        cls.count_instance += 1
+        return super(cls, cls).__new__(cls, *args, **kwargs)
+    
+    @classmethod
     def get_created_instances(*args, **kwargs):
-        nonlocal count_instance
-        print(count_instance)
-        return count_instance
-
+        return cls.count_instance
+    
+    @classmethod
     def reset_instances_counter(*args, **kwargs):
-        nonlocal count_instance
-        print(count_instance)
-        count_instance = 0
-        return count_instance
-
+        old = cls.count_instance
+        cls.count_instance = 0
+        return old
+    
+    cls.count_instance = 0
     cls.__new__ = __new__
     cls.get_created_instances = get_created_instances
     cls.reset_instances_counter = reset_instances_counter
