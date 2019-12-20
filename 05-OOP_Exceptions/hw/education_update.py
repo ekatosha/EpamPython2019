@@ -45,7 +45,7 @@ from collections import defaultdict
 
 
 class DeadlineError(Exception):
-    """Raise an error when your homework is out of date"""
+    'Raise an error when your homework is out of date'
     pass
 
 
@@ -56,7 +56,7 @@ class Human:
 
 
 class Homework:
-    """class for your homework"""
+    'class for your homework'
 
     def __init__(self, text, deadline):
         self.text = text
@@ -65,27 +65,23 @@ class Homework:
 
     def is_active(self):
         now = datetime.datetime.now()
-        if now < self.deadline + self.created:
-            return True
-        else:
-            return False
+        return now < self.deadline + self.created
 
 
-class HomeworkResult:
-    """Returns the result of your homework"""
+class HomeworkResult(Homework):
+    'Returns the result of your homework'
 
     def __init__(self, author, homework, solution):
-        if isinstance(homework, Homework):
-            self.homework = homework
-        else:
-            raise ValueError('You gave a not Homework object')
+        if not isinstance(homework, Homework):
+            raise TypeError('You gave a not Homework object')
+        self.homework = homework
         self.solution = solution
         self.author = author
         self.created = datetime.datetime.now()
 
 
 class Student(Human):
-    """Description of the students"""
+    'Description of the students'
 
     def do_homework(self, homework, solution):
         if homework.is_active():
@@ -94,7 +90,7 @@ class Student(Human):
 
 
 class Teacher(Human):
-    """Description of the teacher"""
+    'Description of the teacher'
     homework_done = defaultdict(list)
 
     @staticmethod
@@ -103,7 +99,7 @@ class Teacher(Human):
 
     def check_homework(self, result):
         if len(result.solution) > 5:
-            self.homework_done[result.homework] = result
+            self.homework_done[result.homework].append(result)
             return True
         else:
             return False
@@ -112,11 +108,11 @@ class Teacher(Human):
     def reset_results(cls, homework=None):
         if homework:
             if isinstance(homework, Homework):
-                cls.homework_done[result.homework] = []
+                cls.homework_done[homework.homework] = []
             else:
-                raise ValueError('You gave a not Homework object')
+                raise TypeError('You gave a not Homework object')
         else:
-            cls.homework_done = defaultdict(list)
+            cls.homework_done.clear()
 
 
 if __name__ == '__main__':
