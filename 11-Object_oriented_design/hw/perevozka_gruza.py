@@ -79,7 +79,7 @@ port = Port(1)
 
 delivery = []
 returning = []
-DELIVERED = []
+delivered = []
 cargo_to_deliver = input()
 quantity = len(cargo_to_deliver)
 for c_ in cargo_to_deliver:
@@ -89,7 +89,7 @@ for c_ in cargo_to_deliver:
     else:
         port.queue.append(cargo)
 
-while quantity != len(DELIVERED):
+while quantity != len(delivered):
     while truck_station.availavle_transport and truck_station.queue:
         cargo = truck_station.queue.popleft()
         delivery.append(create_truck(cargo, truck_station))
@@ -112,7 +112,7 @@ while quantity != len(DELIVERED):
                 else:
                     port.queue.append(cargo_delivered)
             else:
-                DELIVERED.append(cargo_delivered)
+                delivered.append(cargo_delivered)
 
     if to_del:
         for i in to_del:
