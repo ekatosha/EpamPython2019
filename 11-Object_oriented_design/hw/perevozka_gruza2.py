@@ -29,10 +29,20 @@ class Truck(Transport):
     def __init__(self, cargo=None, delivery_time=0, available=0):
         super().__init__(cargo, delivery_time, available)
 
+    @staticmethod
+    def create_truck(cargo, station):
+        destination = Transport.create_transport(cargo, station)
+        return Truck(cargo, list(destination.values())[0], list(destination.values())[0] * 2)
+
 
 class Ship(Transport):
     def __init__(self, cargo=None, delivery_time=0, available=0):
         super().__init__(cargo, delivery_time, available)
+
+    @staticmethod
+    def create_ship(cargo, station):
+        destination = Transport.create_transport(cargo, station)
+        return Ship(cargo, list(destination.values())[0], list(destination.values())[0] * 2)
 
 
 class Station:
@@ -125,16 +135,6 @@ def cargo_to_stations(cargo_list, route, *stations):
                 station.queue.append(cargo)
 
 
-def create_truck(cargo, station):
-    destination = Transport.create_transport(cargo, station)
-    return Truck(cargo, list(destination.values())[0], list(destination.values())[0] * 2)
-
-
-def create_ship(cargo, station):
-    destination = Transport.create_transport(cargo, station)
-    return Ship(cargo, list(destination.values())[0], list(destination.values())[0] * 2)
-
-
 A = collections.deque([{'truck': 1}, {'ship': 4}])
 B = collections.deque([{'truck':5}])
 Route = {'A': A, 'B': B}
@@ -157,10 +157,10 @@ today = GlobalTime()
 while quantity != len(today_delivery.delivered):
     while truck_station.availavle_transport and truck_station.queue:
         cargo = truck_station.queue.popleft()
-        today_delivery.start(create_truck(cargo, truck_station))
+        today_delivery.start(Truck.create_truck(cargo, truck_station))
     while port.availavle_transport and port.queue:
         cargo_to_ship = port.queue.popleft()
-        today_delivery.start(create_ship(cargo_to_ship, port))
+        today_delivery.start(Ship.create_ship(cargo_to_ship, port))
     today_delivery.deliver_one_step()
     today_delivery.check_for_delivered()
     today_delivery.returning_one_step()
