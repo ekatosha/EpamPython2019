@@ -168,7 +168,7 @@ class Delivery:
     def returning_one_step(self):
         for transport in self.returning:
             transport.an_hour_on_the_route()
-            if transport.available == 0:
+            if not transport.available:
                 self.clean_return.add(transport)
                 transport.station.transport_available.append(transport)
 
