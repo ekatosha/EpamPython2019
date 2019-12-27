@@ -52,10 +52,11 @@ class Station:
         self.queue = collections.deque()
         self.transport_quantity = num
         self.transport_available = collections.deque()
+        self.transport = Transport
 
     def create_transport_for_station(self):
         for i in range(self.transport_quantity):
-            transport = Transport()
+            transport = self.transport()
             transport.station = self
             self.transport_available.append(transport)
 
@@ -75,23 +76,13 @@ class Station:
 class Port(Station):
     def __init__(self, num):
         super().__init__(num)
-
-    def create_transport_for_station(self):
-        for i in range(self.transport_quantity):
-            transport = Ship()
-            transport.station = self
-            self.transport_available.append(transport)
+        self.transport = Ship
 
 
 class Truck_station(Station):
     def __init__(self, num):
         super().__init__(num)
-
-    def create_transport_for_station(self):
-        for i in range(self.transport_quantity):
-            transport = Truck()
-            transport.station = self
-            self.transport_available.append(transport)
+        self.transport = Truck
 
 
 class Cargo:
