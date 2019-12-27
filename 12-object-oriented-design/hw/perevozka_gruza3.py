@@ -17,7 +17,6 @@ class Transport:
         self.delivery_time = delivery_time
         self.available = available
 
-
     def load_transport(self, cargo):
         if isinstance(cargo, Cargo):
             self.cargo = cargo
@@ -42,28 +41,10 @@ class Truck(Transport):
     def __init__(self, cargo=None, delivery_time=0, available=0):
         super().__init__(cargo, delivery_time, available)
 
-    def load_transport(self, cargo):
-        super().load_transport(cargo)
-
-    def unload_transport(self):
-        super().unload_transport()
-
-    def an_hour_on_the_route(self):
-        super().an_hour_on_the_route()
-
 
 class Ship(Transport):
     def __init__(self, cargo=None, delivery_time=0, available=0):
         super().__init__(cargo, delivery_time, available)
-
-    def load_transport(self, cargo):
-        super().load_transport(cargo)
-
-    def unload_transport(self):
-        super().unload_transport()
-
-    def an_hour_on_the_route(self):
-        super().an_hour_on_the_route()
 
 
 class Station:
@@ -77,6 +58,18 @@ class Station:
             transport = Transport()
             transport.station = self
             self.transport_available.append(transport)
+
+    def unload_cargo(self):
+        return self.queue.popleft()
+
+    def find_transport(self):
+        return self.transport_available.popleft()
+
+    def load_cargo(self, cargo):
+        return self.queue.append(cargo)
+
+    def return_transport(self, transport):
+        return self.transport_available.append(transport)
 
 
 class Port(Station):
@@ -126,8 +119,12 @@ class Delivery:
         self.clean_delivery = set()
         self.clean_return = set()
 
-    def start(self, transport):
-        self.delivery_in_process.add(transport)
+    def start(self, station):
+        while station.transport_available and station.queue:
+            cargo = station.unload_cargo()
+            transport = station.find_transport()
+            transport.load_transport(cargo)
+            self.delivery_in_process.add(transport)
 
     def deliver_one_step(self):
         for transport in self.delivery_in_process:
@@ -137,7 +134,7 @@ class Delivery:
                 self.returning.add(transport)
                 self.clean_delivery.add(transport)
                 if check_cargo.route:
-                    list(check_cargo.route[0].keys())[0].queue.append(check_cargo)
+                    list(check_cargo.route[0].keys())[0].load_cargo(check_cargo)
                 else:
                     self.delivered.append(check_cargo)
                     print('cargo {} is delivered'.format(check_cargo.name))
@@ -159,7 +156,14 @@ class Delivery:
             transport.an_hour_on_the_route()
             if not transport.available:
                 self.clean_return.add(transport)
-                transport.station.transport_available.append(transport)
+                transport.station.return_transport(transport)
+
+    def delivery_one_step(self, day):
+        today_delivery.deliver_one_step()
+        today_delivery.check_for_delivered()
+        today_delivery.returning_one_step()
+        today_delivery.check_for_returned()
+        day.an_hour_has_passed()
 
 
 def cargo_to_stations(cargo_list, route):
@@ -196,14 +200,6 @@ today_delivery = Delivery()
 today = GlobalTime()
 while quantity != len(today_delivery.delivered):
     for station in stations.values():
-        while station.transport_available and station.queue:
-            cargo = station.queue.popleft()
-            transport = station.transport_available.popleft()
-            transport.load_transport(cargo)
-            today_delivery.start(transport)
-    today_delivery.deliver_one_step()
-    today_delivery.check_for_delivered()
-    today_delivery.returning_one_step()
-    today_delivery.check_for_returned()
-    today.an_hour_has_passed()
+        today_delivery.start(station)
+    today_delivery.delivery_one_step(today)
 print('Total delivery time:', today.time_has_passed)
