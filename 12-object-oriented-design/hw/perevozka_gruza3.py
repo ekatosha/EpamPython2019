@@ -142,7 +142,7 @@ class Delivery:
 
     def deliver_one_step(self):
         for transport in self.delivery_in_process:
-            if transport.delivery_time - 1 == 0:
+            if not transport.delivery_time - 1:
                 check_cargo = transport.cargo
                 transport.unload_transport()
                 self.returning.add(transport)
