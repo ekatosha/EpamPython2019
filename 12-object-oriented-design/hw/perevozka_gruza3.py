@@ -17,9 +17,6 @@ class Transport:
         self.delivery_time = delivery_time
         self.available = available
 
-    @staticmethod
-    def create_transport():
-        return Transport()
 
     def load_transport(self, cargo):
         if isinstance(cargo, Cargo):
@@ -45,10 +42,6 @@ class Truck(Transport):
     def __init__(self, cargo=None, delivery_time=0, available=0):
         super().__init__(cargo, delivery_time, available)
 
-    @staticmethod
-    def create_transport():
-        return Truck()
-
     def load_transport(self, cargo):
         super().load_transport(cargo)
 
@@ -62,10 +55,6 @@ class Truck(Transport):
 class Ship(Transport):
     def __init__(self, cargo=None, delivery_time=0, available=0):
         super().__init__(cargo, delivery_time, available)
-
-    @staticmethod
-    def create_transport():
-        return Ship()
 
     def load_transport(self, cargo):
         super().load_transport(cargo)
@@ -85,7 +74,7 @@ class Station:
 
     def create_transport_for_station(self):
         for i in range(self.transport_quantity):
-            transport = Transport.create_transport()
+            transport = Transport()
             transport.station = self
             self.transport_available.append(transport)
 
@@ -96,7 +85,7 @@ class Port(Station):
 
     def create_transport_for_station(self):
         for i in range(self.transport_quantity):
-            transport = Ship.create_transport()
+            transport = Ship()
             transport.station = self
             self.transport_available.append(transport)
 
@@ -107,7 +96,7 @@ class Truck_station(Station):
 
     def create_transport_for_station(self):
         for i in range(self.transport_quantity):
-            transport = Truck.create_transport()
+            transport = Truck()
             transport.station = self
             self.transport_available.append(transport)
 
