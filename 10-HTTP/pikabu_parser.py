@@ -9,7 +9,7 @@ DEFAULT_HEADERS = {
     "Origin": "pikabu.ru"
 }
 
-with open('C:/Users/ekant/Desktop/cookies.txt') as f:
+with open('/cookies.txt') as f:
         DEFAULT_HEADERS['Cookie'] = f.read()
 s = requests.Session()
 pages = ''
@@ -41,7 +41,7 @@ pages = ''
 for i in range(1,10):
     resp = s.get(f'https://pikabu.ru/hot/actual', headers=DEFAULT_HEADERS)
     pages += resp.text
-soup = BeautifulSoup(response.text,'html.parser')
+soup = BeautifulSoup(pages,'html.parser')
 application = soup.find_all('a', {'data-tag' : True})
 for string in application:
     if string.get_text() in tag_list:
