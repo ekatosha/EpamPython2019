@@ -48,19 +48,19 @@ class AbstractKitchen(ABC):
 
 class СhildKitchen(AbstractKitchen):
 
-    def create_dish(self, menu) -> str:  # ехать
+    def create_dish(self, menu) -> str:  
         return menu['child']
 
 
 class СhineseKitchen(AbstractKitchen):
 
-    def create_dish(self, menu) -> str:  # ехать
+    def create_dish(self, menu) -> str: 
         return menu['chinese']
 
 
 class VeganKitchen(AbstractKitchen):
 
-    def create_dish(self, menu) -> str:  # ехать
+    def create_dish(self, menu) -> str: 
         return menu['vegan']
 
 
@@ -74,7 +74,7 @@ class AbstractFactory(ABC):
     """
 
     @abstractmethod
-    def get_course(self) -> AbstractKitchen:  # создать колесо
+    def get_course(self) -> AbstractKitchen:  
         pass
 
 
