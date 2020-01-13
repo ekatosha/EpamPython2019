@@ -11,7 +11,7 @@ class Quaternion:
         self.k = k
 
     def __repr__(self):
-        return '({} + {}i + {}j + {}k)'.format(self.a, self.i, self.j, self.k)
+        return 'Quaternion(a = {}, i = {}, j = {}, k = {})'.format(self.a, self.i, self.j, self.k)
 
     def __str__(self):
         return '({} + {}i + {}j + {}k)'.format(self.a, self.i, self.j, self.k)
